@@ -29,6 +29,7 @@ stateDiagram-v2
     s6 --> s5
     s6 --> s2
     s6 --> s3
+    s6 --> s7
     s7 --> s1
 ```
 
