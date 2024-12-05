@@ -1,0 +1,18 @@
+{
+  "tasks": {
+    "test": "deno test --allow-read='.' .",
+    "lint": "deno lint .",
+    "fences": "deno run -A src/fences/cli/main.ts",
+    "install": "deno install -gf --name='fences' -A src/fences/cli/main.ts"
+  },
+  "lint": {
+    "rules": {
+      "include": [
+        "no-inferrable-types",
+        "explicit-function-return-type",
+        "eqeqeq",
+        "no-await-in-loop"
+      ]
+    }
+  }
+}

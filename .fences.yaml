@@ -1,0 +1,50 @@
+path: src/
+
+modules:
+  - name: fences/collections
+    exposes:
+      - mod.ts
+
+  - name: fences/config
+    exposes:
+      - types.ts
+      - mod.ts
+
+  - name: fences/config-validation
+    exposes:
+      - mod.ts
+    dependsOn:
+      - fences/config
+      - fences/collections
+
+  - name: fences/structure-validation
+    exposes:
+      - mod.ts
+    dependsOn:
+      - fences/config
+      - fences/parser
+
+  - name: fences/parser
+    description: core parsing logic
+    exposes:
+      - mod.ts
+
+  - name: fences/config-reader
+    dependsOn:
+      - fences/config
+    exposes:
+      - mod.ts
+
+  - name: fences/cli
+    dependsOn:
+      - fences/config
+      - fences/config-reader
+      - fences/config-validation
+      - fences/structure-validation
+      - fences/graph
+
+  - name: fences/graph
+    dependsOn:
+      - fences/config
+    exposes:
+      - mod.ts
