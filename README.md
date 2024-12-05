@@ -7,6 +7,17 @@ The tool analyzes your TypeScript code and flags any instances of prohibited
 imports between modules, helping you maintain a clear separation of concerns and
 minimizing the risk of code coupling and fragility.
 
+## getting started
+
+```sh
+git clone git@github.com:ayakovlenko/fences.git
+
+deno task install
+```
+
+See [.fences.yaml](./.fences.yaml) for an example configuration. This is the
+real configuration for this project.
+
 ## modules
 
 ```mermaid
@@ -97,27 +108,3 @@ Some unorganized thoughts as I'm drafting a definition file:
   - Why? Because I don't want extra complexity of checking whether a nested
     module only imports an outside module through exposed files
   - Modules must be flat
-
-## development
-
-What are the next steps?
-
-- [ ] Fix erroneous import detection; `vr test`
-
-Q: What do we consider an illegal import?
-
-A1: An import is not from a module it is dependent on (`module.dependsOn`).
-
-A2: An import is from a file that is not exported by a module
-(`module.exposes`).
-
-An import is _illegal_ if it originates from module A and there is no dependency
-on module B through this file.
-
-```json
-{
-  "A": {
-    "B/mod.ts": "B"
-  }
-}
-```
