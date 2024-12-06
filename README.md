@@ -108,3 +108,7 @@ Some unorganized thoughts as I'm drafting a definition file:
   - Why? Because I don't want extra complexity of checking whether a nested
     module only imports an outside module through exposed files
   - Modules must be flat
+
+## star history
+
+[![](https://api.star-history.com/svg?repos=ayakovlenko/fences&type=Date)](https://star-history.com/#ayakovlenko/fences&Date)

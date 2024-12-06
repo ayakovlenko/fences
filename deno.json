@@ -14,5 +14,8 @@
         "no-await-in-loop"
       ]
     }
+  },
+  "imports": {
+    "zod": "npm:zod@3"
   }
 }

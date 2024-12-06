@@ -1,43 +1,20 @@
-import { fp, t } from "./deps.ts";
+import zod from "zod";
 
-const ModuleCodec = t.intersection([
-  t.type({
-    name: t.string,
-  }),
-  t.partial({
-    description: t.union([
-      t.string,
-      t.undefined,
-    ]),
-    exposes: t.union([
-      t.readonlyArray(t.string),
-      t.undefined,
-    ]),
-    dependsOn: t.union([
-      t.readonlyArray(t.string),
-      t.undefined,
-    ]),
-    skipFurther: t.union([
-      t.boolean,
-      t.undefined,
-    ]),
-  }),
-]);
-
-// TODO: rename `path` to `root` or `sourceRoot`
-const ProjectCodec = t.type({
-  path: t.string,
-  modules: t.readonlyArray(ModuleCodec),
+const moduleSchema = zod.object({
+  name: zod.string(),
+  exposes: zod.array(zod.string()).optional(),
+  dependsOn: zod.array(zod.string()).optional(),
 });
 
-export type Module = t.TypeOf<typeof ModuleCodec>;
+const projectSchema = zod.object({
+  path: zod.string(),
+  modules: zod.array(moduleSchema),
+});
 
-export type Project = t.TypeOf<typeof ProjectCodec>;
+export type Module = zod.infer<typeof moduleSchema>;
+
+export type Project = zod.infer<typeof projectSchema>;
 
 export function validate(json: unknown): Project {
-  const result = ProjectCodec.decode(json);
-  if (fp.either.isLeft(result)) {
-    throw result.left;
-  }
-  return result.right;
+  return projectSchema.parse(json);
 }
