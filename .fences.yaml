@@ -1,10 +1,6 @@
 path: src/
 
 modules:
-  - name: fences/collections
-    exposes:
-      - mod.ts
-
   - name: fences/config
     exposes:
       - types.ts
@@ -15,7 +11,6 @@ modules:
       - mod.ts
     dependsOn:
       - fences/config
-      - fences/collections
 
   - name: fences/structure-validation
     exposes:

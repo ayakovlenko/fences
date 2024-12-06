@@ -1,4 +1,3 @@
-import { difference } from "../collections/mod.ts";
 import type { Project } from "../config/types.ts";
 import { filterValues, groupBy, mapValues } from "./deps.ts";
 
@@ -57,6 +56,17 @@ function validate(project: Project): ValidationError[] {
     ...findNameClashes(project),
     ...findNonSensicalDependencies(project),
   ];
+}
+
+function difference<T>(xs: readonly T[], ys: readonly T[]): T[] {
+  const xsSet = new Set(xs);
+  const ysSet = new Set(ys);
+  const filtered: T[] = [];
+  for (const x of xsSet) {
+    if (ysSet.has(x)) continue;
+    filtered.push(x);
+  }
+  return filtered;
 }
 
 export { findNameClashes, findNonSensicalDependencies, validate };

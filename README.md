@@ -22,26 +22,24 @@ real configuration for this project.
 
 ```mermaid
 stateDiagram-v2
-    state "fences/collections" as s0
-    state "fences/config" as s1
-    state "fences/config-validation" as s2
-    state "fences/structure-validation" as s3
-    state "fences/parser" as s4
-    state "fences/config-reader" as s5
-    state "fences/cli" as s6
-    state "fences/graph" as s7
+    state "fences/config" as s0
+    state "fences/config-validation" as s1
+    state "fences/structure-validation" as s2
+    state "fences/parser" as s3
+    state "fences/config-reader" as s4
+    state "fences/cli" as s5
+    state "fences/graph" as s6
 
-    s2 --> s1
+    s1 --> s0
     s2 --> s0
-    s3 --> s1
-    s3 --> s4
+    s2 --> s3
+    s4 --> s0
+    s5 --> s0
+    s5 --> s4
     s5 --> s1
-    s6 --> s1
-    s6 --> s5
-    s6 --> s2
-    s6 --> s3
-    s6 --> s7
-    s7 --> s1
+    s5 --> s2
+    s5 --> s6
+    s6 --> s0
 ```
 
 ## benefits of modules

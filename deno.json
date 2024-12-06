@@ -16,6 +16,7 @@
     }
   },
   "imports": {
+    "@std/collections": "jsr:@std/collections@1",
     "zod": "npm:zod@3"
   }
 }
