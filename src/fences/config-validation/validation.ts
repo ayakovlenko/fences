@@ -1,5 +1,4 @@
 import { difference } from "../collections/mod.ts";
-import { getModuleNames } from "../config/mod.ts";
 import type { Project } from "../config/types.ts";
 import { filterValues, groupBy, mapValues } from "./deps.ts";
 
@@ -13,6 +12,10 @@ type ValidationError = {
   kind: ValidationErrorKind;
   details: string;
 };
+
+function getModuleNames(project: Project): string[] {
+  return project.modules.map((m) => m.name);
+}
 
 // --- validations ---
 
