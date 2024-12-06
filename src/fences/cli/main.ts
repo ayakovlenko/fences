@@ -7,12 +7,18 @@ const CONFIG_FILE = ".fences.yaml";
 
 const project = loadConfig(CONFIG_FILE);
 
+const availableCommands = [
+  "check",
+  "graph",
+] as const;
+
+type CommandName = typeof availableCommands[number];
+
+const args = Deno.args.slice();
+
 // rudimentary CLI
-const command: string | undefined = Deno.args[0];
-if (!command) {
-  console.error(`help: available commands: check | graph`);
-  Deno.exit(1);
-}
+const command = args.shift() as CommandName | undefined;
+
 switch (command) {
   case "check": {
     const testConfigResult = testConfig(project);
@@ -34,7 +40,11 @@ switch (command) {
     break;
   }
   default: {
-    console.error(`unrecognized command: ${command}`);
+    console.log(`unknown command: ${command}`);
+    console.log();
+    console.log("available commands:");
+    console.log();
+    console.log(availableCommands.map((c) => "- " + c).join("\n"));
     Deno.exit(1);
   }
 }
