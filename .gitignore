@@ -1,0 +1,4 @@
+.zed/
+.vscode/
+
+node_modules/

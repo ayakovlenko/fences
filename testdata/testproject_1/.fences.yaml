@@ -1,0 +1,14 @@
+path: modules/
+
+modules:
+  - name: foo
+    dependsOn:
+      - bar
+
+  - name: bar
+    exposes:
+      - mod.ts
+
+  - name: baz
+    exposes:
+      - mod.ts
