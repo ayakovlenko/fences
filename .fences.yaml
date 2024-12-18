@@ -42,7 +42,6 @@ modules:
     exposes:
       - mod.ts
     libraries:
-      - "@std/jsonc/"
       - "@std/yaml/"
 
   - name: cli
