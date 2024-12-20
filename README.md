@@ -64,7 +64,6 @@ flowchart TD
     config_validation["config-validation"]
     structure_validation["structure-validation"]
     parser["parser"]
-    config_reader["config-reader"]
     cli["cli"]
     feature["feature"]
     core_fs["core/fs"]
@@ -73,8 +72,7 @@ flowchart TD
     structure_validation --> config
     structure_validation --> parser
     structure_validation --> core_fs
-    config_reader --> config
-    cli --> config_reader
+    cli --> config
     cli --> feature
     feature --> config
     feature --> config_validation
