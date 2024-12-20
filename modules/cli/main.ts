@@ -1,11 +1,11 @@
-import { loadConfig } from "../config-reader/mod.ts";
+import { loadConfig } from "../config/load-config.ts";
 import { check, checkLibraries, mermaidGraph } from "../feature/mod.ts";
 
 const APP_VERSION = "0.1.0";
 
 const CONFIG_FILE = ".fences.yaml";
 
-const project = loadConfig(CONFIG_FILE);
+const project = await loadConfig(CONFIG_FILE);
 
 const availableCommands = [
   "version",

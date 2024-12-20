@@ -3,9 +3,12 @@ path: modules/
 modules:
   - name: config
     exposes:
+      - load-config.ts
       - types.ts
     libraries:
-      - zod
+      - "@std/yaml/"
+      - "node:fs/promises"
+      - "zod"
 
   - name: config-validation
     exposes:
@@ -36,17 +39,9 @@ modules:
       - "@std/expect/"
       - "@swc/wasm"
 
-  - name: config-reader
-    dependsOn:
-      - config
-    exposes:
-      - mod.ts
-    libraries:
-      - "@std/yaml/"
-
   - name: cli
     dependsOn:
-      - config-reader
+      - config
       - feature
 
   - name: feature
