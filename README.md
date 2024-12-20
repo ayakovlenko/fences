@@ -101,8 +101,5 @@ All contributions are highly appreciated!
 
 <details>
 
-<summary>star history</summary>
-
 [![](https://api.star-history.com/svg?repos=ayakovlenko/fences&type=Date)](https://star-history.com/#ayakovlenko/fences&Date)
 
-</details>
