@@ -99,7 +99,4 @@ please call them out.
 
 All contributions are highly appreciated!
 
-<details>
-
 [![](https://api.star-history.com/svg?repos=ayakovlenko/fences&type=Date)](https://star-history.com/#ayakovlenko/fences&Date)
-
