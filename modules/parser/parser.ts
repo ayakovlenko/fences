@@ -5,15 +5,11 @@ import {
   parseSync,
   type Program,
 } from "@swc/wasm";
-import {
-  type Export,
-  type Import,
-  type ImportType,
-  ParsedFile,
-} from "./types.ts";
+import { Specifier, SpecifierType } from "../core/types/mod.ts";
+import { ParsedFile } from "./types.ts";
 
 // FIXME! Also include exports
-export function extractImports(source: string): Import[] {
+export function extractImports(source: string): Specifier[] {
   const ast = getAst(source);
 
   const imports = ast.body.filter((node: HasType): node is ImportDeclaration =>
@@ -22,16 +18,16 @@ export function extractImports(source: string): Import[] {
 
   return imports.map((x) => {
     const value = x.source.value;
-    const type = determineImportType(value);
+    const kind = determineSpecifierType(value);
 
     return {
-      type,
+      kind,
       value,
     };
   });
 }
 
-function extractExports(source: string): Export[] {
+function extractExports(source: string): Specifier[] {
   const ast = getAst(source);
 
   const exports = ast.body.filter((
@@ -42,10 +38,10 @@ function extractExports(source: string): Export[] {
 
   return exports.filter((node) => !!node.source).map((x) => {
     const value = x.source!.value;
-    const type = determineImportType(value);
+    const kind = determineSpecifierType(value);
 
     return {
-      type,
+      kind,
       value,
     };
   });
@@ -70,9 +66,28 @@ function getAst(source: string): Program {
   });
 }
 
-function determineImportType(value: string): ImportType {
+function determineSpecifierType(value: string): SpecifierType {
   if (value.startsWith(".")) {
-    return "LocalImport";
+    return "relative";
   }
-  return "RemoteImport";
+
+  if (stringIsAValidUrl(value)) {
+    return "absolute";
+  }
+
+  return "bare";
+}
+
+function stringIsAValidUrl(s: string): boolean {
+  try {
+    const { protocol } = new URL(s);
+
+    return (
+      protocol === "https:" ||
+      protocol === "file:" ||
+      protocol === "http:"
+    );
+  } catch (_) {
+    return false;
+  }
 }
