@@ -1,6 +1,7 @@
-import { describe, it } from "@std/testing/bdd";
-import { extractImports } from "./parser.ts";
 import { expect } from "@std/expect/expect";
+import { describe, it } from "@std/testing/bdd";
+import { Specifier } from "../core/types/mod.ts";
+import { extractImports } from "./parser.ts";
 
 describe("extractImports", () => {
   it("must extract local and remote imports", () => {
@@ -8,22 +9,27 @@ describe("extractImports", () => {
         import { foo } from "./foo.ts";
         import bar from "@std/bar";
         import * as baz from 'https://foo.com/baz.js';
+        import config from 'file:///opt/nodejs/config.js';
     `;
 
-    const have = extractImports(source);
+    const have: Specifier[] = extractImports(source);
 
-    const want = [
+    const want: Specifier[] = [
       {
-        type: "LocalImport",
+        kind: "relative",
         value: "./foo.ts",
       },
       {
-        type: "RemoteImport",
+        kind: "bare",
         value: "@std/bar",
       },
       {
-        type: "RemoteImport",
+        kind: "absolute",
         value: "https://foo.com/baz.js",
+      },
+      {
+        kind: "absolute",
+        value: "file:///opt/nodejs/config.js",
       },
     ];
 
