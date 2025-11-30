@@ -1,5 +1,5 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "jsr:@std/assert@^1.0.9": "1.0.9",
     "jsr:@std/collections@^1.0.9": "1.0.9",
@@ -13,9 +13,9 @@
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/testing@1": "1.0.6",
     "jsr:@std/yaml@^1.0.5": "1.0.5",
+    "jsr:@zod/zod@4": "4.1.13",
     "npm:@swc/wasm@^1.10.1": "1.10.1",
-    "npm:@types/node@*": "22.5.4",
-    "npm:zod@3": "3.24.0"
+    "npm:@types/node@*": "22.5.4"
   },
   "jsr": {
     "@std/assert@1.0.9": {
@@ -64,6 +64,9 @@
     },
     "@std/yaml@1.0.5": {
       "integrity": "71ba3d334305ee2149391931508b2c293a8490f94a337eef3a09cade1a2a2742"
+    },
+    "@zod/zod@4.1.13": {
+      "integrity": "fef799152d630583b248645fcac03abedd13e39fd2b752d9466b905d73619bfd"
     }
   },
   "npm": {
@@ -78,9 +81,6 @@
     },
     "undici-types@6.19.8": {
       "integrity": "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="
-    },
-    "zod@3.24.0": {
-      "integrity": "sha512-Hz+wiY8yD0VLA2k/+nsg2Abez674dDGTai33SwNvMPuf9uIrBC9eFgIMQxBBbHFxVXi8W+5nX9DcAh9YNSQm/w=="
     }
   },
   "workspace": {
@@ -92,8 +92,8 @@
       "jsr:@std/path@1",
       "jsr:@std/testing@1",
       "jsr:@std/yaml@^1.0.5",
-      "npm:@swc/wasm@^1.10.1",
-      "npm:zod@3"
+      "jsr:@zod/zod@4",
+      "npm:@swc/wasm@^1.10.1"
     ]
   }
 }
