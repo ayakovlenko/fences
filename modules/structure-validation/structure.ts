@@ -1,11 +1,11 @@
+import type { Project } from "../config/types.ts";
+import type { ParsedFile } from "../parser/mod.ts";
+import type { Graph } from "./types.ts";
+import { parseFile } from "../parser/mod.ts";
 import { dirname } from "@std/path/dirname";
 import { join } from "@std/path/join";
 import { normalize } from "@std/path/normalize";
-import type { Project } from "../config/types.ts";
 import { getModuleSourceFilesSync } from "../core/fs/mod.ts";
-import type { ParsedFile } from "../parser/mod.ts";
-import { parseFile } from "../parser/mod.ts";
-import type { Graph } from "./types.ts";
 
 type ImportWithModule = {
   module?: string;
@@ -38,7 +38,9 @@ function detectExternalModuleImports(
   project: Project,
   parsedFile: ParsedFile,
 ): ImportWithModule[] {
-  const localImports = parsedFile.imports.filter((i) => i.kind === "relative");
+  const localImports = parsedFile.imports.filter((i) =>
+    i.type === "LocalImport"
+  );
   const resolvedPaths = localImports.map(({ value }) =>
     normalize(join(dirname(parsedFile.path), value))
   );

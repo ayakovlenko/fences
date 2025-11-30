@@ -32,8 +32,6 @@ modules:
 
   - name: parser
     description: core parsing logic
-    dependsOn:
-      - core/types
     exposes:
       - mod.ts
     libraries:
@@ -64,7 +62,3 @@ modules:
     libraries:
       - "@std/fs/"
       - "@std/path/"
-
-  - name: core/types
-    exposes:
-      - mod.ts

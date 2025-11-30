@@ -1,7 +1,17 @@
-import { Specifier } from "../core/types/mod.ts";
+export type ImportType = "LocalImport" | "RemoteImport";
+
+export type Import = {
+  type: ImportType;
+  value: string;
+};
+
+export type Export = {
+  type: ImportType;
+  value: string;
+};
 
 export type ParsedFile = {
   path: string;
-  imports: Specifier[];
-  exports: Specifier[];
+  imports: Import[];
+  exports: Export[];
 };

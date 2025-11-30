@@ -5,11 +5,15 @@ import {
   parseSync,
   type Program,
 } from "@swc/wasm";
-import { Specifier, SpecifierType } from "../core/types/mod.ts";
-import { ParsedFile } from "./types.ts";
+import {
+  type Export,
+  type Import,
+  type ImportType,
+  ParsedFile,
+} from "./types.ts";
 
 // FIXME! Also include exports
-export function extractImports(source: string): Specifier[] {
+export function extractImports(source: string): Import[] {
   const ast = getAst(source);
 
   const imports = ast.body.filter((node: HasType): node is ImportDeclaration =>
@@ -18,16 +22,16 @@ export function extractImports(source: string): Specifier[] {
 
   return imports.map((x) => {
     const value = x.source.value;
-    const kind = determineSpecifierType(value);
+    const type = determineImportType(value);
 
     return {
-      kind,
+      type,
       value,
     };
   });
 }
 
-function extractExports(source: string): Specifier[] {
+function extractExports(source: string): Export[] {
   const ast = getAst(source);
 
   const exports = ast.body.filter((
@@ -38,10 +42,10 @@ function extractExports(source: string): Specifier[] {
 
   return exports.filter((node) => !!node.source).map((x) => {
     const value = x.source!.value;
-    const kind = determineSpecifierType(value);
+    const type = determineImportType(value);
 
     return {
-      kind,
+      type,
       value,
     };
   });
@@ -66,28 +70,9 @@ function getAst(source: string): Program {
   });
 }
 
-function determineSpecifierType(value: string): SpecifierType {
+function determineImportType(value: string): ImportType {
   if (value.startsWith(".")) {
-    return "relative";
+    return "LocalImport";
   }
-
-  if (stringIsAValidUrl(value)) {
-    return "absolute";
-  }
-
-  return "bare";
-}
-
-function stringIsAValidUrl(s: string): boolean {
-  try {
-    const { protocol } = new URL(s);
-
-    return (
-      protocol === "https:" ||
-      protocol === "file:" ||
-      protocol === "http:"
-    );
-  } catch (_) {
-    return false;
-  }
+  return "RemoteImport";
 }

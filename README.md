@@ -67,13 +67,11 @@ flowchart TD
     cli["cli"]
     feature["feature"]
     core_fs["core/fs"]
-    core_types["core/types"]
 
     config_validation --> config
     structure_validation --> config
     structure_validation --> parser
     structure_validation --> core_fs
-    parser --> core_types
     cli --> config
     cli --> feature
     feature --> config
