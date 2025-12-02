@@ -12,9 +12,9 @@ export async function checkLibraries(project: Project): Promise<string[]> {
     for (const file of moduleFiles) {
       const { imports, exports } = parseFile(file);
 
-      const remoteImports = imports.filter((i) => i.type === "RemoteImport");
+      const remoteImports = imports.filter((i) => i.kind !== "relative");
 
-      const remoteExports = exports.filter((i) => i.type === "RemoteImport");
+      const remoteExports = exports.filter((i) => i.kind !== "relative");
 
       for (const { value } of [...remoteImports, ...remoteExports]) {
         if (!isLibraryAllowed(module, value)) {
