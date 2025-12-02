@@ -1,0 +1,98 @@
+{
+  "path": "modules/",
+  "modules": [
+    {
+      "name": "config",
+      "exposes": [
+        "load-config.ts",
+        "types.ts"
+      ],
+      "libraries": [
+        "node:fs/promises",
+        "zod",
+        "yaml"
+      ]
+    },
+    {
+      "name": "config-validation",
+      "exposes": [
+        "mod.ts"
+      ],
+      "dependsOn": [
+        "config"
+      ]
+    },
+    {
+      "name": "structure-validation",
+      "exposes": [
+        "mod.ts"
+      ],
+      "dependsOn": [
+        "config",
+        "parser",
+        "core/fs"
+      ],
+      "libraries": [
+        "node:path",
+        "vitest"
+      ]
+    },
+    {
+      "name": "parser",
+      "description": "core parsing logic",
+      "dependsOn": [
+        "core/types"
+      ],
+      "exposes": [
+        "mod.ts"
+      ],
+      "libraries": [
+        "@swc/wasm",
+        "vitest",
+        "node:fs"
+      ]
+    },
+    {
+      "name": "cli",
+      "dependsOn": [
+        "config",
+        "feature"
+      ],
+      "libraries": [
+        "node:process"
+      ]
+    },
+    {
+      "name": "feature",
+      "dependsOn": [
+        "config",
+        "config-validation",
+        "structure-validation",
+        "parser",
+        "core/fs"
+      ],
+      "exposes": [
+        "mod.ts"
+      ]
+    },
+    {
+      "name": "core/fs",
+      "dependsOn": [
+        "config"
+      ],
+      "exposes": [
+        "mod.ts"
+      ],
+      "libraries": [
+        "node:fs",
+        "node:path"
+      ]
+    },
+    {
+      "name": "core/types",
+      "exposes": [
+        "mod.ts"
+      ]
+    }
+  ]
+}

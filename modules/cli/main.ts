@@ -4,7 +4,7 @@ import { check, checkLibraries, mermaidGraph } from "../feature/mod.ts";
 
 const APP_VERSION = "0.1.3";
 
-const CONFIG_FILE = ".fences.yaml";
+const CONFIG_FILE = ".fences.json";
 
 const project = await loadConfig(CONFIG_FILE);
 
