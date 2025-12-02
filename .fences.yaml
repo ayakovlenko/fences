@@ -6,17 +6,15 @@ modules:
       - load-config.ts
       - types.ts
     libraries:
-      - "@std/yaml/"
       - "node:fs/promises"
       - "zod"
+      - "bun"
 
   - name: config-validation
     exposes:
       - mod.ts
     dependsOn:
       - config
-    libraries:
-      - "@std/collections/"
 
   - name: structure-validation
     exposes:
@@ -26,9 +24,8 @@ modules:
       - parser
       - core/fs
     libraries:
-      - "@std/testing/bdd"
-      - "@std/expect/"
-      - "@std/path/"
+      - "node:path"
+      - "vitest"
 
   - name: parser
     description: core parsing logic
@@ -37,14 +34,16 @@ modules:
     exposes:
       - mod.ts
     libraries:
-      - "@std/testing/bdd"
-      - "@std/expect/"
       - "@swc/wasm"
+      - "vitest"
+      - "node:fs"
 
   - name: cli
     dependsOn:
       - config
       - feature
+    libraries:
+      - node:process
 
   - name: feature
     dependsOn:
@@ -62,8 +61,8 @@ modules:
     exposes:
       - mod.ts
     libraries:
-      - "@std/fs/"
-      - "@std/path/"
+      - "node:fs"
+      - "node:path"
 
   - name: core/types
     exposes:

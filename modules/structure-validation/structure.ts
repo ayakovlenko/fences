@@ -1,6 +1,4 @@
-import { dirname } from "@std/path/dirname";
-import { join } from "@std/path/join";
-import { normalize } from "@std/path/normalize";
+import { dirname, join, normalize } from "node:path";
 import type { Project } from "../config/types.ts";
 import { getModuleSourceFilesSync } from "../core/fs/mod.ts";
 import type { ParsedFile } from "../parser/mod.ts";
@@ -93,7 +91,12 @@ export function validTransitionsGraph(project: Project): Graph {
           exposedFile,
         );
 
-        graph[module.name][filePath] = dependentModule.name;
+        const paths = graph[module.name];
+        if (!paths) {
+          throw new Error(`module "${module.name}" not found in graph`);
+        }
+
+        paths[filePath] = dependentModule.name;
       }
     }
   }

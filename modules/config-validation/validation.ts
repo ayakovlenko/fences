@@ -1,8 +1,5 @@
 import type { Project } from "../config/types.ts";
 
-import { filterValues } from "@std/collections/filter-values";
-import { mapValues } from "@std/collections/map-values";
-
 type ValidationErrorKind =
   | "ModuleNameClash"
   | "NonsensicalDependency"
@@ -27,7 +24,7 @@ function findNameClashes(project: Project): ValidationError[] {
       Object.groupBy(moduleNames, (x) => x),
       (names) => names!.length,
     ),
-    (count) => count > 1,
+    (count) => (count as number) > 1,
   );
   const errors: ValidationError[] = [];
   for (const name of Object.keys(clashes)) {
@@ -68,6 +65,42 @@ function validate(project: Project): ValidationError[] {
     ...findNameClashes(project),
     ...findNonSensicalDependencies(project),
   ];
+}
+
+// https://jsr.io/@std/collections/1.1.3/filter_values.ts
+function filterValues<T>(
+  record: Readonly<Record<string, T>>,
+  predicate: (value: T) => boolean,
+): Record<string, T> {
+  const result: Record<string, T> = {};
+  const entries = Object.entries(record);
+
+  for (const [key, value] of entries) {
+    if (predicate(value)) {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}
+
+// https://jsr.io/@std/collections/1.1.3/map_values.ts
+export function mapValues<T, O, K extends string>(
+  record: Record<K, T>,
+  transformer: (value: T, key: K) => O,
+  // deno-lint-ignore no-explicit-any
+): any {
+  // deno-lint-ignore no-explicit-any
+  const result: any = {};
+  const entries = Object.entries<T>(record);
+
+  for (const [key, value] of entries) {
+    const mappedValue = transformer(value, key as K);
+
+    result[key] = mappedValue;
+  }
+
+  return result;
 }
 
 export { findNameClashes, findNonSensicalDependencies, validate };

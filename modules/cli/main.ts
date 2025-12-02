@@ -1,3 +1,4 @@
+import process from "node:process";
 import { loadConfig } from "../config/load-config.ts";
 import { check, checkLibraries, mermaidGraph } from "../feature/mod.ts";
 
@@ -15,7 +16,7 @@ const availableCommands = [
 
 type CommandName = typeof availableCommands[number];
 
-const args = Deno.args.slice();
+const args = process.argv.slice(2);
 
 // rudimentary CLI
 const command = args.shift() as CommandName | undefined;
@@ -38,7 +39,7 @@ switch (command) {
     }
 
     if (errors.length > 0) {
-      Deno.exit(1);
+      process.exit(1);
     }
 
     break;
@@ -56,6 +57,6 @@ switch (command) {
     console.log("available commands:");
     console.log();
     console.log(availableCommands.map((c) => "- " + c).join("\n"));
-    Deno.exit(1);
+    process.exit(1);
   }
 }

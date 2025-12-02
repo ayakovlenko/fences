@@ -1,4 +1,4 @@
-import { Specifier } from "../core/types/mod.ts";
+import type { Specifier } from "../core/types/mod.ts";
 
 export type ParsedFile = {
   path: string;

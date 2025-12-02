@@ -1,6 +1,5 @@
-import { expect } from "@std/expect/expect";
-import { describe, it } from "@std/testing/bdd";
-import { Specifier } from "../core/types/mod.ts";
+import { describe, expect, it } from "vitest";
+import type { Specifier } from "../core/types/mod.ts";
 import { extractImports } from "./parser.ts";
 
 describe("extractImports", () => {

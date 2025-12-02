@@ -1,4 +1,4 @@
-import { Project } from "../config/types.ts";
+import type { Project } from "../config/types.ts";
 import { getModuleImports, validTransitionsGraph } from "./structure.ts";
 
 export function findIllegalImports(project: Project): string[] {
@@ -19,8 +19,16 @@ export function findIllegalImports(project: Project): string[] {
           continue;
         }
 
+        const transition = validTransitions[module.name];
+        if (!transition) {
+          errors.push(
+            `in ${filePath}: illegal import from ${actualModule}`,
+          );
+          continue;
+        }
+
         const expectedModule =
-          validTransitions[module.name][fileImport.filepath];
+          transition[fileImport.filepath];
 
         if (!expectedModule) {
           errors.push(
