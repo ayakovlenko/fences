@@ -2,7 +2,7 @@
 
 Fences helps you enforce inter-module boundaries within your Deno projects.
 
-Fences is dog-fooded. See [`.fences.yaml`](./.fences.yaml) for an example of a
+Fences is dog-fooded. See [`.fences.json`](./.fences.json) for an example of a
 real configuration that is used by this repo.
 
 ## installation
@@ -23,20 +23,29 @@ $ fences version
 
 ## getting started
 
-Create `.fences.yaml` in your project root directory and define your modules.
+Create `.fences.json` in your project root directory and define your modules.
 
 Run `fences check` to check the boundaries.
 
 ### check inter-module dependencies
 
-```yaml
-modules:
-  - name: foo
-    dependsOn:
-      - bar
-  - name: bar
-    exposes:
-      - mod.ts
+```json
+{
+  "modules": [
+    {
+      "name": "foo",
+      "dependsOn": [
+        "bar"
+      ]
+    },
+    {
+      "name": "bar",
+      "exposes": [
+        "mod.ts"
+      ]
+    }
+  ]
+}
 ```
 
 In this example, module `foo` is allowed to import only from `bar` module from
@@ -44,11 +53,17 @@ In this example, module `foo` is allowed to import only from `bar` module from
 
 ### check libraries
 
-```yaml
-modules:
-  - name: foo
-    libraries:
-      - "@std/fs/"
+```json
+{
+  "modules": [
+    {
+      "name": "foo",
+      "libraries": [
+        "@std/fs/"
+      ]
+    }
+  ]
+}
 ```
 
 In this example, module `foo` is allowed to import only from the `@std/fs`

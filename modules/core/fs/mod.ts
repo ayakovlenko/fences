@@ -1,6 +1,6 @@
-import { join } from "@std/path/join";
-import { walk, walkSync } from "@std/fs/walk";
-import { Project } from "../../config/types.ts";
+import { readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
+import type { Project } from "../../config/types.ts";
 
 const exts = [
   "ts",
@@ -24,7 +24,7 @@ export function getModuleSourceFilesSync(
 
   const sources: string[] = [];
   for (const file of walking) {
-    sources.push(file.path);
+    sources.push(file);
   }
 
   return sources;
@@ -38,15 +38,51 @@ export async function getModuleSourceFiles(
 
   const modulePath = join(basePath, moduleName);
 
-  const walking = walk(modulePath, {
+  const files = walkSync(modulePath, {
     includeDirs: false,
     exts,
   });
 
   const sources: string[] = [];
-  for await (const file of walking) {
-    sources.push(file.path);
+  for (const file of files) {
+    sources.push(file);
   }
 
   return sources;
+}
+
+function walkSync(dirPath: string, options?: {
+  includeDirs?: boolean;
+  exts?: string[];
+}): string[] {
+  const toReturn: string[] = [];
+
+  for (const dirFile of readdirSync(dirPath)) {
+    const fullPath = join(dirPath, dirFile);
+    const stats = statSync(fullPath);
+
+    if (stats.isDirectory()) {
+      const subFiles = walkSync(fullPath, options);
+      toReturn.push(...subFiles);
+
+      if (options?.includeDirs) {
+        toReturn.push(fullPath);
+      }
+      continue;
+    }
+
+    if (!options?.exts) {
+      toReturn.push(fullPath);
+      continue;
+    }
+
+    for (const ext of options.exts) {
+      if (dirFile.endsWith(`.${ext}`)) {
+        toReturn.push(fullPath);
+        break;
+      }
+    }
+  }
+
+  return toReturn;
 }

@@ -1,4 +1,4 @@
-import { Project } from "../config/types.ts";
+import type { Project } from "../config/types.ts";
 import { findNameClashes, findNonSensicalDependencies } from "./validation.ts";
 
 function testConfig(project: Project): string[] {

@@ -1,6 +1,6 @@
-import { Module, Project } from "../config/types.ts";
-import { parseFile } from "../parser/mod.ts";
+import type { Module, Project } from "../config/types.ts";
 import { getModuleSourceFiles } from "../core/fs/mod.ts";
+import { parseFile } from "../parser/mod.ts";
 
 export async function checkLibraries(project: Project): Promise<string[]> {
   const errors: string[] = [];

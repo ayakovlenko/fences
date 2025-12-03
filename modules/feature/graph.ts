@@ -1,4 +1,4 @@
-import { Project } from "../config/types.ts";
+import type { Project } from "../config/types.ts";
 
 // https://dreampuf.github.io/GraphvizOnline/
 export function mermaidGraph(project: Project): string {

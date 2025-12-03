@@ -1,9 +1,7 @@
-import { Project } from "../config/types.ts";
+import { describe, expect, it } from "vitest";
+import type { Project } from "../config/types.ts";
 import { validTransitionsGraph } from "./structure.ts";
-import { Graph } from "./types.ts";
-
-import { describe, it } from "@std/testing/bdd";
-import { expect } from "@std/expect/expect";
+import type { Graph } from "./types.ts";
 
 describe("validTransitionsGraph", () => {
   it("must build graph of valid dependencies", () => {

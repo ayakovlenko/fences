@@ -1,12 +1,14 @@
 // import { type ExportSpecifier } from "@swc/core";
+
+import { readFileSync } from "node:fs";
 import {
   type ExportNamedDeclaration,
   type ImportDeclaration,
-  parseSync,
   type Program,
+  parseSync,
 } from "@swc/wasm";
-import { Specifier, SpecifierType } from "../core/types/mod.ts";
-import { ParsedFile } from "./types.ts";
+import type { Specifier, SpecifierType } from "../core/types/mod.ts";
+import type { ParsedFile } from "./types.ts";
 
 // FIXME! Also include exports
 export function extractImports(source: string): Specifier[] {
@@ -50,7 +52,8 @@ function extractExports(source: string): Specifier[] {
 type HasType = { type: string };
 
 export function parseFile(path: string): ParsedFile {
-  const source = Deno.readTextFileSync(path);
+  const source = readFileSync(path, "utf-8");
+
   return {
     path,
     imports: extractImports(source),
